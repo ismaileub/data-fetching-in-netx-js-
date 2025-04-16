@@ -1,5 +1,19 @@
 import React from 'react';
 import MealSearchInput from './components/MealSearchInput';
+import Image from 'next/image';
+import { Roboto } from 'next/font/google';
+
+
+export const metadata = {
+    title: "All meals",
+    description: "All meals loaded from MealDB API",
+};
+
+const roboto = Roboto({
+    weight: ["400", "600", "800"],
+    subsets: ["latin"],
+});
+
 
 const MealsPage = async ({ searchParams }) => {
 
@@ -33,8 +47,10 @@ const MealsPage = async ({ searchParams }) => {
             <div className='grid grid-cols-4'>
                 {meals?.map((meal) => (
                     <div key={meal.idMeal} className="mb-8 border-b pb-4">
-                        <h2 className="text-xl font-semibold">{meal.strMeal}</h2>
-                        <img src={meal.strMealThumb} alt={meal.strMeal} className="w-64 rounded mt-2" />
+                        <h2 className={` ${roboto.className} text-xl font-semibold`} >{meal.strMeal}</h2>
+                        {/* <img src={meal.strMealThumb} alt={meal.strMeal} className="w-64 rounded mt-2" /> */}
+                        <Image src={meal.strMealThumb} alt={meal.strMeal} width={641} height={641} className="w-64 rounded mt-2"></Image>
+
                         <p className="mt-2 text-sm text-gray-700">{meal.strInstructions.slice(0, 200)}...</p>
 
                         <ul className="mt-2 text-sm">
