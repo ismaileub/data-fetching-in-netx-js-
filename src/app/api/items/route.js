@@ -19,10 +19,10 @@ export async function GET() {
 
 export async function POST(req) {
 
-    const postedData = await req.json();
-    const result = await dbConnect("nextjs").insertOne(postedData);
-    revalidatePath("/products")
+    // const postedData = await req.json();
+    // const result = await dbConnect("nextjs").insertOne(postedData);
+    // revalidatePath("/products")
+    // return Response.json(result)
 
 
-    return Response.json(result)
 }

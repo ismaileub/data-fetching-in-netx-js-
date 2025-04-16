@@ -1,7 +1,11 @@
 "use client"
+import postSingleProducts from '@/app/actions/products/postSingleProducts';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const AddProductsForm = () => {
+
+    const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -18,18 +22,19 @@ const AddProductsForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { NEX_PUBLIC_SERVER_ADDRESS } = process.env;
 
         try {
-            const res = await fetch("http://localhost:3000/api/items", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await res.json();
-            console.log('Product added:', data);
+            // const res = await fetch(`${NEX_PUBLIC_SERVER_ADDRESS}/api/items`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formData),
+            // });
+            // const result = await res.json();
+            const result = await postSingleProducts(formData);
+            console.log('Product added:', result);
 
             // Reset form
             setFormData({
@@ -37,7 +42,8 @@ const AddProductsForm = () => {
                 description: '',
                 price: '',
             });
-            alert("Product added Successfully")
+            //alert("Product added Successfully")
+            router.push("/products")
         } catch (error) {
             console.error('Error adding product:', error);
         }
