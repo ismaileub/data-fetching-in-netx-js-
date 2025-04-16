@@ -17,11 +17,28 @@ const roboto = Roboto({
 
 const MealsPage = async ({ searchParams }) => {
 
-    const query = await searchParams;
+    //const query = await searchParams;
+    // const searchQuery = searchParams?.search || "chicken";
+    //const query = searchParams?.search ? searchParams : { search: "chicken" }; // default search term
+
+    //const searchQuery = searchParams?.search;
+    // const url = searchQuery === undefined
+    //     ? "https://www.themealdb.com/api/json/v1/1/search.php?s"
+    //     : `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`;
+
+    const search = searchParams?.search;
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${search ?? ""}`;
+
+
+
 
     const fetchMeals = async () => {
         try {
-            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query.search}`);
+            //const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query.search}`, {
+            //const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`, {
+            const res = await fetch(url, {
+                cache: "force-cache"
+            });
             const data = await res.json();
             //setMeals(data?.meals || []);
             return data.meals;
